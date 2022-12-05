@@ -62,6 +62,7 @@ public class CollectionsMain {
 		System.out.println(">>owner asc");
 		Collections.sort(accountList, new AccountOwnerAscComparator());
 		System.out.println(accountList);
+		System.out.println(accountList);
 		
 		
 		
