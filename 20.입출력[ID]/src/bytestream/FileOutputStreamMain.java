@@ -12,7 +12,7 @@ import java.io.*;
 public class FileOutputStreamMain {
 
 	public static void main(String[] args) throws Exception {
-		FileOutputStream fos = new FileOutputStream("fileOut.dat");
+		FileOutputStream fos = new FileOutputStream(new File("src/bytestream/fileOut.dat"));
 		/*
 		public abstract void write(int b)throws IOException;
 		 - Writes the specified byte to this output stream. 
