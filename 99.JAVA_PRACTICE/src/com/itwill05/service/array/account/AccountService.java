@@ -1,4 +1,4 @@
-package com.itwill05.service.array;
+package com.itwill05.service.array.account;
 /*
  * Account객체전체에관련된 업무를 실행할클래스
  * 		1.계좌객체들(Account[]) 을멤버변수로가진다.

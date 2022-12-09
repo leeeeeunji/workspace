@@ -1,6 +1,7 @@
 package event;
 
 import java.awt.*;
+import java.awt.event.*;
 
 import javax.swing.*;
 /*
@@ -42,18 +43,57 @@ public class ActionEventJFrame extends JFrame {
 		westBtn = new JButton("이벤트소스[WEST]");
 		
 		/*****************이벤트핸들러 객체등록*****************/
-		northBtn.addActionListener(new NorthButtonActionEventHandler(this));
+		// 1. 외부클래스
+		NorthButtonActionEventHandler handler = new NorthButtonActionEventHandler(this);
+		northBtn.addActionListener(handler);
+		// 2. 내부클래스
+		southBtn.addActionListener(new SouthButtonActionEventHandler());
+		// 3. 익명클래스
+		ActionListener westButtenHandler = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("west button click!!");
+			}
+		};
+		westBtn.addActionListener(westButtenHandler);
+		
+		
+		eastBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("east button click!!");
+			}
+		});
+		
 		
 		contentPane.add(northBtn, BorderLayout.NORTH);
 		contentPane.add(southBtn, BorderLayout.SOUTH);
-		/*
+		
 		contentPane.add(eastBtn, BorderLayout.EAST);
 		contentPane.add(westBtn, BorderLayout.WEST);
-		*/
 		
-		this.setSize(300, 400);
+		
+		this.setSize(500, 300);
 		this.setVisible(true);
 	}
+	
+	/**********************member inner class*************************/
+	public class SouthButtonActionEventHandler implements ActionListener {
+		int count;
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			count++;
+			setTitle("south button click[" + count + "]");
+			int r = (int)(Math.random()*256);
+			int g = (int)(Math.random()*256);
+			int b = (int)(Math.random()*256);
+			contentPane.setBackground(new Color(r, g, b));
+			
+		}
+	}
+	
+	
 	
 	public static void main(String[] args) {
 		new ActionEventJFrame();

@@ -42,7 +42,7 @@ public class NorthButtonActionEventHandler implements ActionListener{
 		int g = (int)(Math.random()*256);
 		int b = (int)(Math.random()*256);
 		
-		frame.contentPane.setBackground(Color.GREEN);
+		frame.contentPane.setBackground(new Color(r, g, b));
 		
 	}
 }
