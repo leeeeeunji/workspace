@@ -1,4 +1,4 @@
-package dao.third;
+package dao.address.third;
 /*
  * VO(Value Object), DTO(Data Transfer Object)
  * 	- address테이블 1개 row의 데이타 값을 가지는 객체

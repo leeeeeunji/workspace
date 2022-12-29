@@ -19,6 +19,12 @@ GUEST_CONTENT           VARCHAR2(4000)
 
 public class Guest {
 	
+	public Guest() {
+		
+	}
+	
+	
+	
 	
 	
 }

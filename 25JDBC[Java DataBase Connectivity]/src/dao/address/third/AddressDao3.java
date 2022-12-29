@@ -1,17 +1,20 @@
-package dao.first;
-/*
- * Dao(Date Access Object) 클래스
- * 		- address테이블에 CRUD(Create, Read, Update, Delete)작업을 하는 단위메소드를 
- * 		  가지고 있는 클래스
- */
+package dao.address.third;
 
 import java.sql.*;
 
-public class AddressDao1 {
-	public AddressDao1() {
+/*
+ * Dao(Data Access Object) 클래스
+ *    - address테이블에 CRUD(Create,Read,Update,Delete)작업을하는
+ *      단위메쏘드를 가지고있는 클래스
+ *    
+ * 
+ */
+
+public class AddressDao3 {
+	public AddressDao3( ) {
 		
 	}
-	public void insert() throws Exception {
+	public void insert(Address newAddress) throws Exception {
 		/***************데이타베이스 접속 정보***************/
 		String driverClass="oracle.jdbc.OracleDriver";
 		String url="jdbc:oracle:thin:@localhost:1521:xe";
@@ -19,7 +22,10 @@ public class AddressDao1 {
 		String password="tiger";
 		/****************************************************/
 		
-		String insertSQL = "insert into address values(address_no_seq.nextval,'김김김','123-4568','경기도 시흥시')";
+		String insertSQL = "insert into address values(address_no_seq.nextval,'" 
+														+ newAddress.getName()+"','"
+														+ newAddress.getPhone()+"','"
+														+ newAddress.getAddress()+"')";
 		
 		Class.forName(driverClass);
 		Connection con = DriverManager.getConnection(url, user, password);
@@ -29,8 +35,10 @@ public class AddressDao1 {
 		System.out.println(">>insert row count : " + rowCount + " 행 insert");
 		stmt.close();
 		con.close();
+
 	}
-	public void update() throws Exception {
+	
+	public void update(Address updateAddress) throws Exception {
 		/***************데이타베이스 접속 정보***************/
 		String driverClass = "oracle.jdbc.OracleDriver";
 		String url = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -38,7 +46,11 @@ public class AddressDao1 {
 		String password = "tiger";
 		/****************************************************/
 		
-		String updateSQL = "update address set name='김경호', phone='899-9999', address='서울시 강남구' where no = 1";
+		String updateSQL = "update address set name='" 
+							+ updateAddress.getName() + "', phone='" 
+							+ updateAddress.getPhone() + "', address='" 
+							+ updateAddress.getAddress() + "' where no = " 
+							+ updateAddress.getNo();
 		
 		Class.forName(driverClass);
 		Connection con = DriverManager.getConnection(url, user, password);
@@ -49,7 +61,7 @@ public class AddressDao1 {
 		stmt.close();
 		con.close();
 	}
-	public void delete() throws Exception {
+	public void delete(int no) throws Exception {
 		/***************데이타베이스 접속 정보***************/
 		String driverClass = "oracle.jdbc.OracleDriver";
 		String url = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -57,7 +69,7 @@ public class AddressDao1 {
 		String password = "tiger";
 		/****************************************************/
 		
-		String deleteSQL = "delete address where no=23";
+		String deleteSQL = "delete address where no=" + no;
 		
 		Class.forName(driverClass);
 		Connection con = DriverManager.getConnection(url, user, password);
@@ -67,14 +79,14 @@ public class AddressDao1 {
 		stmt.close();
 		con.close();
 	}
-	public void findByPrimaryKey() throws Exception {
+	public void findByPrimaryKey(int no) throws Exception {
 		/***************데이타베이스 접속 정보***************/
 		String driverClass = "oracle.jdbc.OracleDriver";
 		String url = "jdbc:oracle:thin:@localhost:1521:xe";
 		String user = "scott";
 		String password = "tiger";
 		/****************************************************/
-		String selectSQL = "select no, name, phone, address from address where no = 3";
+		String selectSQL = "select no, name, phone, address from address where no = " + no;
 		
 		Class.forName(driverClass);
 		Connection con = DriverManager.getConnection(url, user, password);
@@ -83,7 +95,7 @@ public class AddressDao1 {
 		ResultSet rs = stmt.executeQuery(selectSQL);
 		
 		if(rs.next()) {
-			int no = rs.getInt("no");
+			int n = rs.getInt("no");
 			String name = rs.getString("name");
 			String phone = rs.getString("phone");
 			String address = rs.getString("address");
@@ -126,6 +138,6 @@ public class AddressDao1 {
 		rs.close();
 		stmt.close();
 		con.close();
-	}//모두
+	}
 
 }

@@ -1,6 +1,7 @@
-package dao.second;
+package dao.address.fourth;
 
 import java.sql.*;
+import java.util.*;
 
 /*
  * Dao(Data Access Object) 클래스
@@ -10,11 +11,11 @@ import java.sql.*;
  * 
  */
 
-public class AddressDao2 {
-	public AddressDao2( ) {
+public class AddressDao4 {
+	public AddressDao4( ) {
 		
 	}
-	public void insert(String name, String phone, String address) throws Exception {
+	public int insert(Address newAddress) throws Exception {
 		/***************데이타베이스 접속 정보***************/
 		String driverClass="oracle.jdbc.OracleDriver";
 		String url="jdbc:oracle:thin:@localhost:1521:xe";
@@ -22,7 +23,10 @@ public class AddressDao2 {
 		String password="tiger";
 		/****************************************************/
 		
-		String insertSQL = "insert into address values(address_no_seq.nextval,'"+name+"','"+phone+"','"+address+"')";
+		String insertSQL = "insert into address values(address_no_seq.nextval,'" 
+														+ newAddress.getName()+"','"
+														+ newAddress.getPhone()+"','"
+														+ newAddress.getAddress()+"')";
 		
 		Class.forName(driverClass);
 		Connection con = DriverManager.getConnection(url, user, password);
@@ -32,10 +36,11 @@ public class AddressDao2 {
 		System.out.println(">>insert row count : " + rowCount + " 행 insert");
 		stmt.close();
 		con.close();
+		return rowCount;
 
 	}
 	
-	public void update(int no, String name, String phone, String address) throws Exception {
+	public int update(Address updateAddress) throws Exception {
 		/***************데이타베이스 접속 정보***************/
 		String driverClass = "oracle.jdbc.OracleDriver";
 		String url = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -43,18 +48,23 @@ public class AddressDao2 {
 		String password = "tiger";
 		/****************************************************/
 		
-		String updateSQL = "update address set name='" + name + "', phone='" + phone + "', address='" + address + "' where no = " + no;
+		String updateSQL = "update address set name='" 
+							+ updateAddress.getName() + "', phone='" 
+							+ updateAddress.getPhone() + "', address='" 
+							+ updateAddress.getAddress() + "' where no = " 
+							+ updateAddress.getNo();
 		
 		Class.forName(driverClass);
 		Connection con = DriverManager.getConnection(url, user, password);
 		Statement stmt = con.createStatement();
 		int rowCount = stmt.executeUpdate(updateSQL);
-		System.out.println(">> " + rowCount + " 행 update");
+		//System.out.println(">> " + rowCount + " 행 update");
 		
 		stmt.close();
 		con.close();
+		return rowCount;
 	}
-	public void delete(int no) throws Exception {
+	public int delete(int no) throws Exception {
 		/***************데이타베이스 접속 정보***************/
 		String driverClass = "oracle.jdbc.OracleDriver";
 		String url = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -68,11 +78,12 @@ public class AddressDao2 {
 		Connection con = DriverManager.getConnection(url, user, password);
 		Statement stmt = con.createStatement();
 		int rowCount = stmt.executeUpdate(deleteSQL);
-		System.out.println(">> " + rowCount + " 행 delete");
+		//System.out.println(">> " + rowCount + " 행 delete");
 		stmt.close();
 		con.close();
+		return rowCount;
 	}
-	public void findByPrimaryKey(int no) throws Exception {
+	public Address findByPrimaryKey(int no) throws Exception {
 		/***************데이타베이스 접속 정보***************/
 		String driverClass = "oracle.jdbc.OracleDriver";
 		String url = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -80,6 +91,8 @@ public class AddressDao2 {
 		String password = "tiger";
 		/****************************************************/
 		String selectSQL = "select no, name, phone, address from address where no = " + no;
+		
+		Address findAddress = null;
 		
 		Class.forName(driverClass);
 		Connection con = DriverManager.getConnection(url, user, password);
@@ -92,16 +105,19 @@ public class AddressDao2 {
 			String name = rs.getString("name");
 			String phone = rs.getString("phone");
 			String address = rs.getString("address");
-			System.out.println(no + "\t" + name + "\t" + phone + "\t" + address);
+			findAddress = new Address(no, name, phone, address);
 		}else {
-			System.out.println("조건에 만족하는 주소록 존재하지 않음");
+			//System.out.println("조건에 만족하는 주소록 존재하지 않음");
+			findAddress = null;
 		}
 		
 		rs.close();
 		stmt.close();
 		con.close();
+		return findAddress;
+		
 	}//1개만
-	public void findAll() throws Exception {
+	public List<Address> findAll() throws Exception {
 		/***************데이타베이스 접속 정보***************/
 		String driverClass = "oracle.jdbc.OracleDriver";
 		String url = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -110,27 +126,29 @@ public class AddressDao2 {
 		/****************************************************/
 		String selectSQL = "select no, name, phone, address from address";
 		
+		List<Address> addressList = new ArrayList<Address>();
+		
 		Class.forName(driverClass);
 		Connection con = DriverManager.getConnection(url, user, password);
 		Statement stmt = con.createStatement();
-		
 		ResultSet rs = stmt.executeQuery(selectSQL);
-		
 		if(rs.next()) {
 			do {
 				int no = rs.getInt("no");
 				String name = rs.getString("name");
 				String phone = rs.getString("phone");
-				String address = rs.getString("address");
-				System.out.println(no + "\t" + name + "\t" + phone + "\t" + address);
+				String addr = rs.getString("address");
+				Address address = new Address(no, name, phone, addr);
+				//=addressList.add(address);
 			}while(rs.next());
 		}else {
-			System.out.println("조건에 만족하는 주소록 존재하지 않음");
+			//System.out.println("조건에 만족하는 주소록 존재하지 않음");
 		}
 		
 		rs.close();
 		stmt.close();
 		con.close();
+		return addressList;
 	}
 
 }

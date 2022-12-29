@@ -41,7 +41,6 @@ public class StatementMain {
 		DEPTNO            NUMBER(2) 
 		 */
 		System.out.println("---------------stmt.executeQuery(selectSql);----------------");
-		stmt.executeQuery(selectSql);
 		ResultSet rs = stmt.executeQuery(selectSql);
 		
 		while(rs.next()) {

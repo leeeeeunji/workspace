@@ -1,4 +1,4 @@
-package dao.third;
+package dao.address.third;
 
 public class AddressDao3TestMain {
 
