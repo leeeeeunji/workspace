@@ -25,7 +25,7 @@ public class JDBCFlowMain {
 		
 		/*
 		 * 2. Connection 객체 생성
-		 * 	- DB Server와 연결객체
+		 * 	- DB Server와 연결해주는 객체
 		 */
 		Connection con = DriverManager.getConnection(url, user, password);
 		System.out.println("2. Connection 객체 생성 : " + con);
