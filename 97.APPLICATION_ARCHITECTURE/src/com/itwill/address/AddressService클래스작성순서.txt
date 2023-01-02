@@ -1,0 +1,51 @@
+
+############# AddressService 클래스 작성 #############
+
+1. AddressService.java 클래스 생성
+2. AddressDao객체를 멤버필드로 선언
+3. AddressService클래스 생성자에서 AddressDao객체 생성
+4. 클라이언트 요구사항 분석 시 도출된 단위 업무 당, 한개의 메소드 생성
+5. 메소드 인자반환타입 정의
+6. 메소드 구현
+public class AddressService {
+	private AddressDao addressDao;
+	
+	public AddressService() throws Exception {
+		addressDao = new AddressDao();
+	}
+	/*
+	 * 주소록쓰기
+	 */
+	public int addressWrite(Address address) throws Exception {
+		return addressDao.insert(address);
+	}
+	/*
+	 * 주소록 번호로 1개 보기
+	 */
+	public Address addressDetail(int no) throws Exception {
+		return addressDao.findByPrimaryKey(no);
+	}
+	/* 
+	 * 주소록 번호로 삭제하기
+	 */
+	public int addressDelete(int no) throws Exception {
+		return addressDao.delete(no);
+	}
+	/*
+	 * 주소록 전체보기
+	 */
+	public List<Address> addressList() throws Exception {
+		return addressDao.findAll();
+	}
+	
+}
+7. 구현된 메소드 테스트
+<< 반드시 테스트 되어야합니다.>>>
+		public class AddressServiceTestMain {
+		
+			public static void main(String[] args) throws Exception{
+				AddressService AddressService=
+						new AddressService();
+						
+			}
+		}		
