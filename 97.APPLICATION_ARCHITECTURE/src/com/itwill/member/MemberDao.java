@@ -43,6 +43,7 @@ public class MemberDao {
 		pstmt.setString(3, member.getM_address());
 		pstmt.setInt(4, member.getM_age());
 		pstmt.setString(5, member.getM_married());
+		//pstmt.setDate(6,new  java.sql.Date(updateMember.getM_regdate().getTime()));
 		pstmt.setString(6, member.getM_id());
 		int rowCount = pstmt.executeUpdate();
 		pstmt.close();

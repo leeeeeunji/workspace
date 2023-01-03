@@ -21,32 +21,38 @@ public class GuestService {
 		/*
 		<< GuestDao객체사용>>
 		*/
-		return 0;
+		return guestDao.insert(guest);
 	}
 	/*
 	 * 방명록번호로 1개보기
 	 */
 	public Guest guestDetail(int guest_no) throws Exception{
-		return null;
+		return guestDao.findByPrimaryKey(guest_no);
 	}
 	/*
 	 * 방명록번호로삭제
 	 */
 	public int guestDelete(int guest_no) 
 			throws Exception{
-		return 0;
+		return guestDao.delete(guest_no);
 	}
 	/*
 	 * 방명록 리스트보기
 	 */
 	public List<Guest> guestList()throws Exception {
-		return null;
+		return guestDao.findAll();
 	}
 	/*
 	 * 방명록 이름으로 검색해서 리스트보기
 	 */
-	public List<Guest> findByGuestName(String guest_name) {
-		return null;
+	public List<Guest> findByGuestName(String guest_name) throws Exception {
+		return guestDao.findByGuestName(guest_name);
+	}
+	/*
+	 * 방명록 수정
+	 */
+	public int guestUpdate(Guest guest) throws Exception {
+		return guestDao.update(guest);
 	}
 	
 }
