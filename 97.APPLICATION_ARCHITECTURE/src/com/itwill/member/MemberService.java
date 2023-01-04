@@ -1,5 +1,7 @@
 package com.itwill.member;
 
+import java.util.*;
+
 public class MemberService {
 	private MemberDao memberDao;
 	public MemberService() throws Exception {
@@ -84,6 +86,14 @@ public class MemberService {
 	 */
 	public int memberDelete(String m_id) throws Exception {
 		return memberDao.delete(m_id);
+	}
+	
+	/* << admin >>
+	 * 회원 전체리스트
+	 */
+	public List<Member> memberList() throws Exception{
+		return memberDao.findAll();
+		
 	}
 	
 	/* admin
